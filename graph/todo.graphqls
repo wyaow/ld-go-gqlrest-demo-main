@@ -1,0 +1,64 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+# https://github.com/99designs/gqlgen/issues/1579
+#directive @deprecated(reason: String = "No longer supported") on FIELD_DEFINITION | ENUM_VALUE
+
+extend type Mutation {
+  createTodo(input: NewTodoInput!): Todo! @http(url: "/api/v1/todos")
+  updateTodo(input: UpdateTodoInput!): Todo!
+    @http(url: "/api/v1/todo/{id}", method: "PUT")
+  completeTodo(id: ID!): Todo! @http(url: "/api/v1/todo/{id}/complete")
+  completeTodos(ids: [ID!]): [Todo!] @http(url: "/api/v1/todos/bulk-complete")
+  deleteTodo(id: ID!): Boolean!
+    @http(url: "/api/v1/todo/{id}", method: "DELETE")
+  deleteTodoByUser(userID: ID!): Boolean!
+    @http(url: "/api/v1/todos", method: "DELETE")
+    @hasRole(role: ADMIN)
+    @hide(for: ["rest"])
+}
+
+input NewTodoInput {
+  text: String!
+  userID: String!
+  done: Boolean
+}
+
+input UpdateTodoInput {
+  id: ID! # https://www.apollographql.com/blog/graphql/basics/designing-graphql-mutations/
+  text: String
+  userID: String
+}
+
+extend type Query {
+  todo(id: ID!, name: String, tmp: Int): Todo! @http(url: "/api/v1/todos/{id}")
+  todos(
+    ids: [ID!]
+    userId: ID
+    types: [TodoType]
+    text: String
+    text2: [String]
+    done: Boolean
+    done2: [Boolean!]
+    pageOffset: Int
+    pageSize: Int
+  ): [Todo!]! @http(url: "/api/v1/todos")
+}
+type Todo {
+  id: ID!
+  text: String!
+  done: Boolean! @deprecated(reason: "blah blah")
+  user: User! @hide(for: ["rest", "cli"])
+  type: TodoType
+  categories: [Category!] @hide(for: ["rest0", "cli"])
+}
+type Category {
+  id: ID! @hide(for: ["rest", "cli"])
+  name: String!
+}
+
+enum TodoType {
+  TypeA
+  TypeB
+}

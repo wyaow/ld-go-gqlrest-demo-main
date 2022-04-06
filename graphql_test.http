@@ -1,0 +1,93 @@
+### TODO 样例
+POST http://localhost:8080/query HTTP/1.1
+content-type: application/json
+X-Request-Type: GraphQL
+
+mutation createTodo {
+  createTodo(input: {userID:"uid", text:"text"}){
+    id,text,done
+  }
+}
+
+### TODO 样例
+POST http://localhost:8080/query HTTP/1.1
+content-type: application/json
+X-Request-Type: GraphQL
+
+mutation updateTodo($id: ID!) {
+  updateTodo(input: {id:$id, userID:"uid", text:"9527.Updated"}){
+    id,text,done
+  }
+}
+
+{
+  "id": "T9527",
+  "id2": "T9527"
+}
+
+
+### TODO 样例
+POST http://localhost:8080/query HTTP/1.1
+content-type: application/json
+X-Request-Type: GraphQL
+
+query todos {
+  todos(ids:["T9527"],userId2:"userID2",text2:"text2",done2:true) {
+    id
+    text
+    done
+  }
+}
+
+### TODO 样例
+POST http://localhost:8080/query HTTP/1.1
+content-type: application/json
+X-Request-Type: GraphQL
+
+mutation deleteTodo {
+  deleteTodoByUser(userID:"uid")
+}
+
+### TODO 样例
+POST http://localhost:8080/graphql HTTP/1.1
+content-type: application/json
+X-Request-Type: GraphQL
+
+query todos {
+  todos {
+    id
+    text
+    done
+  }
+}
+
+###
+POST http://localhost:8080/graphql HTTP/1.1
+content-type: application/json
+X-Request-Type: GraphQL
+
+query queryByName($name: String!) {
+  vms(names:[$name]) {
+    id
+    name
+  }
+}
+
+{
+  "name": "test"
+}
+
+
+###
+POST http://localhost:8080/graphql HTTP/1.1
+content-type: application/json
+X-Request-Type: GraphQL
+
+query overlapping {
+  overlapping {
+    oneFoo
+    twoFoo
+    oldFoo
+    newFoo
+  }
+}

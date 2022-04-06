@@ -1,0 +1,23 @@
+#directive @goModel(model: String, models: [String!]) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+directive @goModel(
+  model: String
+  models: [String!]
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+#directive @goField(forceResolver: Boolean, name: String) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+directive @goField(
+  forceResolver: Boolean
+  name: String
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+extend type Query {
+  overlapping: OverlappingFields @http(url: "/api/v1/overlapping")
+}
+
+type OverlappingFields {
+  oneFoo: Int! @goField(name: "foo") @hide(for: ["rest", "default"])
+  twoFoo: Int! @goField(name: "foo")
+  oldFoo: Int! @goField(name: "foo", forceResolver: true)
+  newFoo: Int! @hide(for: ["rest", "default"])
+  new_foo: Int!
+}

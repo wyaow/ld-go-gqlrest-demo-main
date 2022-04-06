@@ -1,0 +1,9 @@
+*.exe
+*.zip
+#graph/generated/*
+#graph/model/*_gen.go
+hack/doc/*
+workspace.code-workspace
+hack/tmp/*
+*test.profile
+coverage.*

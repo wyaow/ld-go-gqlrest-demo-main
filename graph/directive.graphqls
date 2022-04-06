@@ -1,0 +1,24 @@
+"""
+Marks an element of a GraphQL schema as only available via a preview header
+"""
+directive @preview(
+  """
+  The identifier of the API preview that toggles this field.
+  """
+  toggledBy: String!
+) on SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | INTERFACE | UNION | ENUM | ENUM_VALUE | INPUT_OBJECT | INPUT_FIELD_DEFINITION
+
+directive @hide(
+  for: [String!]!
+) on FIELD_DEFINITION
+
+directive @http(
+  url: String!
+  method: String
+) on FIELD_DEFINITION
+
+directive @hasRole(role: Role!) on FIELD_DEFINITION
+enum Role {
+    ADMIN
+    USER
+}

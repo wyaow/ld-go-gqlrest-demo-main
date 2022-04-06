@@ -1,0 +1,5 @@
+overrides:
+  - files: "*.graphql"
+    options:
+      tab: false
+      tabWidth: 4
